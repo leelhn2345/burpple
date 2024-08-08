@@ -1,0 +1,19 @@
+{
+  "db_name": "PostgreSQL",
+  "query": "update restaurants\n        set\n        name = $1,\n        address = $2,\n        cuisine = $3,\n        description = $4,\n        updated_at = $5\n        where id = $6",
+  "describe": {
+    "columns": [],
+    "parameters": {
+      "Left": [
+        "Text",
+        "Text",
+        "Text",
+        "Text",
+        "Timestamptz",
+        "Int4"
+      ]
+    },
+    "nullable": []
+  },
+  "hash": "a085a22ee4eccf86b771429daa2ce67d2f2386ec042719f68f7f98fd39212dc8"
+}
