@@ -61,7 +61,6 @@ export function DataTable<TData, TValue>({
     },
   });
 
-  console.log(searchParams.toString());
   return (
     <div>
       <div className="flex items-center py-4">

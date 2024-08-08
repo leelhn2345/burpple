@@ -15,7 +15,6 @@ async function getData(queryParams: URLSearchParams): Promise<Response> {
   const res = await fetch(url, {
     cache: "no-cache",
   });
-  console.log(res);
   return res.json();
 }
 

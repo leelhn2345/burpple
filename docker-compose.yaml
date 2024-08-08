@@ -1,12 +1,24 @@
-# to simulate production runtime on localhost
 services:
-  burpple:
+  client:
+    image: burpple_frontend
+    container_name: burpple_frontend_container
+    depends_on:
+      - server
+    build:
+      context: ./client
+      dockerfile: Dockerfile
+    ports:
+      - 3000:3000
+    environment:
+      - BACKEND_URL=http://server:5000
+
+  server:
     image: burpple_backend
     container_name: burpple_backend_container
     depends_on:
       - database
     build:
-      context: .
+      context: ./server
       dockerfile: Dockerfile
     ports:
       - 5000:5000
@@ -19,8 +31,7 @@ services:
       - APP_DATABASE__HOST=database
       - APP_DATABASE__PORT=5432
       - APP_DATABASE__REQUIRE_SSL=false # remove this env when in actual prod environment.
-    # env_file:
-    #   - .env
+      - APP_APPLICATION__request_origin=http://client:3000
 
   database:
     image: postgres:latest
@@ -31,6 +42,3 @@ services:
       - POSTGRES_DB=burpple
       - POSTGRES_USER=postgres
       - POSTGRES_PASSWORD=password
-#     volumes:
-#       - postgres_data_stg:/var/lib/postgresql/data
-

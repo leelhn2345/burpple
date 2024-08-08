@@ -31,6 +31,18 @@ export function TableNewEntry() {
   const [resState, setResState] = useState({ ...defaultResState });
   const pathname = usePathname();
   async function handleSubmit() {
+    if (!resState.name) {
+      toast.error("name cannot be empty");
+      return;
+    }
+    if (!resState.cuisine) {
+      toast.error("cuisine cannot be empty");
+      return;
+    }
+    if (!resState.address) {
+      toast.error("address cannot be empty");
+      return;
+    }
     const res = await newRestaurant(resState, pathname);
     if (res) {
       toast.error("submit error. please seek IT support.");
