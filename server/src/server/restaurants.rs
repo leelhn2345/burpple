@@ -53,21 +53,6 @@ pub struct Restaurant {
     updated_at: OffsetDateTime,
 }
 
-impl Restaurant {
-    pub fn new(name: String, address: String, cuisine: String, description: String) -> Self {
-        let now = OffsetDateTime::now_utc();
-        Self {
-            id: None,
-            name,
-            address,
-            cuisine,
-            description,
-            created_at: now,
-            updated_at: now,
-        }
-    }
-}
-
 #[derive(ToSchema, Serialize)]
 pub struct RestaurantData {
     total: i64,
