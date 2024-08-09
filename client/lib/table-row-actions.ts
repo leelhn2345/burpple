@@ -27,7 +27,10 @@ export async function updateRestaurant(
   revalidatePath(pathname);
 }
 
-export async function newRestaurant(restaurant: Restaurant, pathname: string) {
+export async function newRestaurant(
+  restaurant: Record<string, string | number | boolean>,
+  pathname: string,
+) {
   const res = await fetch(`${process.env.BACKEND_URL}/restaurants`, {
     method: "POST",
     headers: {

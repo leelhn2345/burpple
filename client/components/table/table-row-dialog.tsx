@@ -1,6 +1,5 @@
-import { useState } from "react";
+import { Dispatch, SetStateAction, useState, useTransition } from "react";
 import {
-  DialogClose,
   DialogContent,
   DialogDescription,
   DialogFooter,
@@ -16,21 +15,29 @@ import { humanReadableDateTime } from "@/lib/datetime";
 import { updateRestaurant } from "@/lib/table-row-actions";
 import { usePathname } from "next/navigation";
 import { toast } from "sonner";
+import { Spinner } from "../spinner";
 
 type Props = {
   restaurant: Restaurant;
+  setOpen: Dispatch<SetStateAction<boolean>>;
 };
-export function TableRowDialog({ restaurant }: Props) {
+export function TableRowDialog({ restaurant, setOpen }: Props) {
   const [resState, setResState] = useState({ ...restaurant });
   const pathname = usePathname();
+  const [isPending, startTransition] = useTransition();
 
   async function handleUpdate() {
-    const res = await updateRestaurant(restaurant.id, resState, pathname);
-    if (res) {
-      toast.error("can't update. please contact IT support");
-    } else {
-      toast.success("updated");
-    }
+    startTransition(async () => {
+      const loading = toast("updating restaurant...");
+      const res = await updateRestaurant(restaurant.id, resState, pathname);
+      toast.dismiss(loading);
+      if (res) {
+        toast.error("can't update. please contact IT support");
+      } else {
+        setOpen(false);
+        toast.success("updated");
+      }
+    });
   }
   return (
     <DialogContent onCloseAutoFocus={() => setResState({ ...restaurant })}>
@@ -93,11 +100,13 @@ export function TableRowDialog({ restaurant }: Props) {
         </div>
       </div>
       <DialogFooter>
-        <DialogClose asChild>
-          <Button className="w-full" onClick={() => handleUpdate()}>
-            Save
-          </Button>
-        </DialogClose>
+        <Button
+          type="submit"
+          disabled={isPending}
+          onClick={() => handleUpdate()}
+        >
+          {isPending ? <Spinner /> : "Save"}
+        </Button>
       </DialogFooter>
     </DialogContent>
   );

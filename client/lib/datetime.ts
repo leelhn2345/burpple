@@ -1,3 +1,11 @@
+/**
+ * parses datetime string from RFC3339 format into human readable string
+ *
+ * # example
+ *
+ * const datetimeString = "2024-08-09T13:25:17.514Z"
+ * console.log(datetimeString) # Wednesday, August 7, 2024, 10:22:01
+ */
 export function humanReadableDateTime(dateString: string) {
   const date = new Date(dateString);
   const formatted = date.toLocaleString("en-US", {

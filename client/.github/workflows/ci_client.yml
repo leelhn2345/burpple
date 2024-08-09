@@ -1,0 +1,21 @@
+name: "ci_client"
+
+on:
+  push:
+    branches:
+      - main
+defaults:
+  run:
+    working-directory: ./client
+
+jobs:
+  code_quality:
+    name: Code Quality
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: oven-sh/setup-bun@v1
+
+      - run: bun install
+      - run: bun prettier:check
+      - run: bun lint

@@ -1,0 +1,36 @@
+name: "ci_server"
+
+on:
+  push:
+    branches:
+      - main
+defaults:
+  run:
+    working-directory: ./server
+
+env:
+  CARGO_TERM_COLOR: always
+
+jobs:
+  format:
+    name: Rustfmt
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: dtolnay/rust-toolchain@stable
+        with:
+          components: rustfmt
+      - name: formatting
+        run: cargo fmt --check
+
+  clippy:
+    name: Clippy
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: dtolnay/rust-toolchain@stable
+        with:
+          components: clippy
+      - uses: Swatinem/rust-cache@v2
+      - name: linting
+        run: cargo clippy -- -D warnings

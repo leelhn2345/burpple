@@ -57,7 +57,7 @@ export function TableRowAction({ restaurant }: Props) {
           </DropdownMenuItem>
         </DropdownMenuContent>
       </DropdownMenu>
-      {open && <TableRowDialog restaurant={restaurant} />}
+      {open && <TableRowDialog setOpen={setOpen} restaurant={restaurant} />}
     </Dialog>
   );
 }

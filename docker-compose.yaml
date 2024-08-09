@@ -25,7 +25,6 @@ services:
     environment:
       # these env keys have to be set for deployment.
       # the values used below are for production simulation purpose.
-      # for more details, refer to `./.env.prod`.
       - APP_DATABASE__USERNAME=postgres
       - APP_DATABASE__PASSWORD=password
       - APP_DATABASE__HOST=database
