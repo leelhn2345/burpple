@@ -17,6 +17,7 @@ import {
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import { useCallback } from "react";
 import { TableQuery } from "@/lib/query-params/table";
+import Link from "next/link";
 
 interface DataTablePaginationProps<TData> {
   table: Table<TData>;
@@ -87,61 +88,75 @@ export function DataTablePagination<TData>({
           {table.getPageCount()}
         </div>
         <div className="flex items-center space-x-2">
-          <Button
-            variant="outline"
-            className="h-8 w-8 p-0"
-            onClick={() => paginationChange(TableQuery.OFFSET, 0)}
-            disabled={!table.getCanPreviousPage()}
+          <Link href={`${pathname}?${createQueryString(TableQuery.OFFSET, 0)}`}>
+            <Button
+              variant="outline"
+              className="h-8 w-8 p-0"
+              // onClick={() => paginationChange(TableQuery.OFFSET, 0)}
+              disabled={!table.getCanPreviousPage()}
+            >
+              <span className="sr-only">Go to first page</span>
+              <ChevronsLeftIcon className="h-4 w-4" />
+            </Button>
+          </Link>
+          <Link
+            href={`${pathname}?${createQueryString(TableQuery.OFFSET, table.getState().pagination.pageIndex - 1)}`}
           >
-            <span className="sr-only">Go to first page</span>
-            <ChevronsLeftIcon className="h-4 w-4" />
-          </Button>
-          <Button
-            variant="outline"
-            className="h-8 w-8 p-0"
-            onClick={() =>
-              paginationChange(
-                TableQuery.OFFSET,
-                table.getState().pagination.pageIndex - 1,
-              )
-            }
-            disabled={!table.getCanPreviousPage()}
+            <Button
+              variant="outline"
+              className="h-8 w-8 p-0"
+              // onClick={() =>
+              //   paginationChange(
+              //     TableQuery.OFFSET,
+              //     table.getState().pagination.pageIndex - 1,
+              //   )
+              // }
+              disabled={!table.getCanPreviousPage()}
+            >
+              <span className="sr-only">Go to previous page</span>
+              <ChevronLeftIcon className="h-4 w-4" />
+            </Button>
+          </Link>
+          <Link
+            href={`${pathname}?${createQueryString(TableQuery.OFFSET, table.getState().pagination.pageIndex + 1)}`}
           >
-            <span className="sr-only">Go to previous page</span>
-            <ChevronLeftIcon className="h-4 w-4" />
-          </Button>
-          <Button
-            variant="outline"
-            className="h-8 w-8 p-0"
-            onClick={() =>
-              paginationChange(
-                TableQuery.OFFSET,
-                table.getState().pagination.pageIndex + 1,
-              )
-            }
-            disabled={!table.getCanNextPage()}
+            <Button
+              variant="outline"
+              className="h-8 w-8 p-0"
+              // onClick={() =>
+              //   paginationChange(
+              //     TableQuery.OFFSET,
+              //     table.getState().pagination.pageIndex + 1,
+              //   )
+              // }
+              disabled={!table.getCanNextPage()}
+            >
+              <span className="sr-only">Go to next page</span>
+              <ChevronRightIcon className="h-4 w-4" />
+            </Button>
+          </Link>
+          <Link
+            href={`${pathname}?${createQueryString(TableQuery.OFFSET, table.getPageCount() - 1)}`}
           >
-            <span className="sr-only">Go to next page</span>
-            <ChevronRightIcon className="h-4 w-4" />
-          </Button>
-          <Button
-            variant="outline"
-            className="h-8 w-8 p-0"
-            onClick={() =>
-              router.push(
-                pathname +
-                  "?" +
-                  createQueryString(
-                    TableQuery.OFFSET,
-                    table.getPageCount() - 1,
-                  ),
-              )
-            }
-            disabled={!table.getCanNextPage()}
-          >
-            <span className="sr-only">Go to last page</span>
-            <ChevronsRightIcon className="h-4 w-4" />
-          </Button>
+            <Button
+              variant="outline"
+              className="h-8 w-8 p-0"
+              // onClick={() =>
+              //   router.push(
+              //     pathname +
+              //       "?" +
+              //       createQueryString(
+              //         TableQuery.OFFSET,
+              //         table.getPageCount() - 1,
+              //       ),
+              //   )
+              // }
+              disabled={!table.getCanNextPage()}
+            >
+              <span className="sr-only">Go to last page</span>
+              <ChevronsRightIcon className="h-4 w-4" />
+            </Button>
+          </Link>
         </div>
       </div>
     </div>
