@@ -49,9 +49,9 @@ export function DataTablePagination<TData>({
     [searchParams],
   );
 
-  function paginationChange(name: string, value: number) {
-    router.push(pathname + `?` + createLimitQueryString(name, value));
-  }
+  // function paginationChange(name: string, value: number) {
+  //   router.push(pathname + `?` + createLimitQueryString(name, value));
+  // }
 
   return (
     <div className="my-2 flex items-center justify-between px-2">
