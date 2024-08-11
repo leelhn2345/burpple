@@ -47,12 +47,15 @@ export function DataTablePagination<TData>({
     },
     [searchParams],
   );
+
+  function paginationChange(name: string, value: number) {
+    router.push(pathname + `?` + createLimitQueryString(name, value));
+  }
+
   return (
     <div className="my-2 flex items-center justify-between px-2">
       <div className="flex-1 text-sm text-muted-foreground">
         {`Total: ${table.getRowCount()} restaurants`}
-        {/* {table.getSelectedRowModel().rows.length} of{" "} */}
-        {/* {table.getFilteredRowModel().rows.length} row(s) selected. */}
       </div>
       <div className="flex items-center space-x-6 lg:space-x-8">
         <div className="flex items-center space-x-2">
@@ -87,11 +90,7 @@ export function DataTablePagination<TData>({
           <Button
             variant="outline"
             className="h-8 w-8 p-0"
-            onClick={() =>
-              router.push(
-                pathname + "?" + createQueryString(TableQuery.OFFSET, 0),
-              )
-            }
+            onClick={() => paginationChange(TableQuery.OFFSET, 0)}
             disabled={!table.getCanPreviousPage()}
           >
             <span className="sr-only">Go to first page</span>
@@ -101,13 +100,9 @@ export function DataTablePagination<TData>({
             variant="outline"
             className="h-8 w-8 p-0"
             onClick={() =>
-              router.push(
-                pathname +
-                  "?" +
-                  createQueryString(
-                    TableQuery.OFFSET,
-                    table.getState().pagination.pageIndex - 1,
-                  ),
+              paginationChange(
+                TableQuery.OFFSET,
+                table.getState().pagination.pageIndex - 1,
               )
             }
             disabled={!table.getCanPreviousPage()}
@@ -119,13 +114,9 @@ export function DataTablePagination<TData>({
             variant="outline"
             className="h-8 w-8 p-0"
             onClick={() =>
-              router.push(
-                pathname +
-                  "?" +
-                  createQueryString(
-                    TableQuery.OFFSET,
-                    table.getState().pagination.pageIndex + 1,
-                  ),
+              paginationChange(
+                TableQuery.OFFSET,
+                table.getState().pagination.pageIndex + 1,
               )
             }
             disabled={!table.getCanNextPage()}

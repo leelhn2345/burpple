@@ -12,6 +12,7 @@ export function TableFilter() {
   const pathname = usePathname();
 
   useEffect(() => {
+    if (!searchValue) return;
     const searchParams = new URLSearchParams();
     searchParams.set(TableQuery.SEARCH, searchValue);
     router.push(pathname + "?" + searchParams);
